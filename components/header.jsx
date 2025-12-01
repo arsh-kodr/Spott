@@ -17,13 +17,15 @@ import { useState } from "react";
 import { Building, Plus, Ticket } from "lucide-react";
 import OnboardingModal from "./onboarding-modal";
 import { useOnboarding } from "@/hooks/use-onboarding";
+import SearchLocationBar from "./search-location-bar";
 
 const Header = () => {
   const { isLoading } = useStoreUser();
 
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
-  const {showOnboarding , handleOnboardingComplete ,handleOnboardingSkip} = useOnboarding();
+  const { showOnboarding, handleOnboardingComplete, handleOnboardingSkip } =
+    useOnboarding();
 
   return (
     <>
@@ -39,13 +41,22 @@ const Header = () => {
               className="w-full h-11"
               priority
             />
+
+            {/* pro badge */}
           </Link>
 
           {/* Search & Location - Desktop Only */}
+          <div className="hidden md:flex flex-1 justify-center">
+            <SearchLocationBar />
+          </div>
 
           {/* Right Side Actions */}
           <div className="flex items-center">
-            <Button variant={"ghost"} size={"sm"} onClick={() => setShowUpgradeModal(true)}>
+            <Button
+              variant={"ghost"}
+              size={"sm"}
+              onClick={() => setShowUpgradeModal(true)}
+            >
               Pricing
             </Button>
 
@@ -83,7 +94,6 @@ const Header = () => {
                   <UserButton.Action label="manageAccount" />
                 </UserButton.MenuItems>
               </UserButton>
-
             </Authenticated>
 
             <Unauthenticated>
@@ -97,6 +107,9 @@ const Header = () => {
         </div>
 
         {/* Mobile Search & Location - Below Header */}
+        <div className="md:hidden border-t px-3 py-3">
+          <SearchLocationBar />
+        </div>
 
         {/* Loader  */}
 
@@ -109,9 +122,9 @@ const Header = () => {
 
       {/* Modals */}
       <OnboardingModal
-       isOpen={showOnboarding}
-       onClose={handleOnboardingSkip}
-       onComplete={handleOnboardingComplete}
+        isOpen={showOnboarding}
+        onClose={handleOnboardingSkip}
+        onComplete={handleOnboardingComplete}
       />
     </>
   );
